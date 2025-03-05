@@ -1,0 +1,168 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #ffcc00;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin-bottom: 100px; 
+        }
+        .navbar {
+            background-color: #ff6600;
+            border-radius: 15px;
+        }
+        .fare-guide {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 15px;
+        }
+        .ticket-price {
+            background: #1a67c9;
+            color: white;
+            font-size: 64px; 
+            font-weight: bold;
+            text-align: center;
+            padding: 60px; 
+            border-radius: 15px;
+            margin-top: 30px; 
+        }
+        .fare-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        button {
+            border-radius: 12px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        button:hover {
+            background-color: #ff6600;
+            transform: translateY(-3px)
+        }
+        .large-img {
+            width: 100%;
+            max-width: 540px; 
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #ff6600;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 14px;
+            border-top: 3px solid #ff6600;
+        }
+        .footer a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+       
+        .container {
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="https://i.pinimg.com/564x/98/00/28/9800281c8b277f60cda1d360d1f55e7e.jpg" alt="Train Logo" height="40"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link text-white" href="Home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="TrainSchedule.html">Train Schedule</a></li>
+                    <li class="nav-item"><a class="nav-link text-white" href="Feedbackform.html">Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 mb-4">
+                <img src="https://njytolentino.wordpress.com/wp-content/uploads/2012/06/mrt3-routemap.jpg" alt="Train Map" class="img-fluid rounded-3 large-img">
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="fare-section">
+                    <label class="fw-bold text-white bg-dark p-2 d-block rounded-3">LEAVING FROM:</label>
+                    <select class="form-control mb-3 rounded-pill" id="fromStation">
+                        <option value="0">North Ave.</option>
+                        <option value="0">Quezon Avenue</option>
+                        <option value="0">GMA Kamuning</option>
+                        <option value="3">Araneta Center - Cubao</option>
+                        <option value="3">Santolan - Annapolis</option>
+                        <option value="7">Ortigas</option>
+                        <option value="7">Shaw Boulevard</option>
+                        <option value="7">Boni</option>
+                        <option value="11">Guadalupe</option>
+                        <option value="11">Buendia</option>
+                        <option value="11">Ayala</option>
+                        <option value="15">Magallanes</option>
+                        <option value="15">Taft Avenue</option>
+
+                    </select>
+
+                    <br>
+
+                    <label class="fw-bold text-white bg-dark p-2 d-block rounded-3">GOING TO:</label>
+                    <select class="form-control mb-3 rounded-pill" id="toStation">
+                        <option value="0">North Ave.</option>
+                        <option value="0">Quezon Avenue</option>
+                        <option value="0">GMA Kamuning</option>
+                        <option value="3">Araneta Center - Cubao</option>
+                        <option value="3">Santolan - Annapolis</option>
+                        <option value="7">Ortigas</option>
+                        <option value="7">Shaw Boulevard</option>
+                        <option value="7">Boni</option>
+                        <option value="11">Guadalupe</option>
+                        <option value="11">Buendia</option>
+                        <option value="11">Ayala</option>
+                        <option value="15">Magallanes</option>
+                        <option value="15">Taft Avenue</option>
+                    </select>
+
+                    <br>
+
+                    <button class="btn btn-primary rounded-pill" onclick="calculateFare(false)">Regular Fare</button>
+                    <button class="btn btn-outline-primary rounded-pill" onclick="calculateFare(true)">Discounted Fare</button>
+                    
+                    <!-- Blue box moved here with margin-top added -->
+                    <div class="ticket-price rounded-3" id="ticketPrice">13.00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateFare(Discounted) {
+            let baseFare = 13.00;
+            let discountRate = 0.2; 
+            let finalFare = Discounted ? baseFare * (1 - discountRate) : baseFare;
+            document.getElementById("ticketPrice").innerText = finalFare.toFixed(2);
+        }
+    </script>
+
+    <div class="footer">
+        <a href="https://docs.google.com/document/d/1PbXLq1GnqbkI6MFrUQ6h3dh4ZVBYUOGEZoKweW1nNoM/edit?usp=sharing" target="_blank">References</a>
+    </div>
+
+</body>
+</html>
